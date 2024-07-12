@@ -27,9 +27,18 @@
     @stack('styles')
 </head>
 <body>
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+                    <div>
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                    </div>
+
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -85,6 +94,29 @@
         <main class="py-4">
             @yield('content')
         </main>
+                    
+
+
+     @role('super-admin')
+    <script>
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('e250a01f05d8cb789fc5', {
+            cluster: 'ap1',
+            encrypted: true
+        });
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('form-submitted', function(data) {
+            toastr.success('New User Registered', 'Name: ' + data.name, {
+                timeOut: 5000,  
+                extendedTimeOut: 2000,  
+            });
+        });
+    </script>      
+                 
+     @endrole
+                   
+
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -92,6 +124,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    
     @stack('scripts')
 
 </body>

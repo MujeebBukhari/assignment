@@ -33,23 +33,7 @@
             </div>
         </div>
     </div>
-    @role('super-admin')
-    <script>
-        Pusher.logToConsole = true;
-        var pusher = new Pusher('e250a01f05d8cb789fc5', {
-            cluster: 'ap1',
-            encrypted: true
-        });
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('form-submitted', function(data) {
-            toastr.success('New User Registered', 'Name: ' + data.name, {
-                timeOut: 5000,  
-                extendedTimeOut: 2000,  
-            });
-        });
-    </script>      
-                 
-     @endrole
+ 
 </div>
 
 @endsection
